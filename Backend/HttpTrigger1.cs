@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace Security4PaasLovers.Function
 {
@@ -18,7 +19,8 @@ namespace Security4PaasLovers.Function
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
-            string securetoken = "d07fb0fe9d844ecf9769006913cb4077";
+            // Retrieve token from environment variable instead of hardcoding
+            string securetoken = Environment.GetEnvironmentVariable("SECURE_TOKEN");
             return new OkObjectResult("Welcome to Azure Functions!");
         }
     }
